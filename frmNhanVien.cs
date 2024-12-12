@@ -280,19 +280,19 @@ namespace DONGHODEOTAY
 
         private void bttimkiem_Click(object sender, EventArgs e)
         {
-            
-                string searchText = txttimkiem.Text.Trim(); // Assuming txtSearch is the TextBox where user enters the search query
 
-                if (string.IsNullOrEmpty(searchText))
-                {
-                    MessageBox.Show("Vui lòng nhập thông tin tìm kiếm!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+            string searchText = txttimkiem.Text.Trim(); // Assuming txtSearch is the TextBox where user enters the search query
 
-                try
-                {
-                    // Create the SQL query to search by employee ID or name
-                    string query = "SELECT Manv, Tennv, Diachi, Sodt FROM NhanVien WHERE Manv LIKE @SearchText OR Tennv LIKE @SearchText";
+            if (string.IsNullOrEmpty(searchText))
+            {
+                MessageBox.Show("Vui lòng nhập thông tin tìm kiếm!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                // Create the SQL query to search by employee ID or name
+                string query = "SELECT Manv, Tennv, Diachi, Sodt FROM NhanVien WHERE Manv LIKE @SearchText OR Tennv LIKE @SearchText";
                 using (SqlCommand command = new SqlCommand(query, kn.Connection))
                 {
                     command.Parameters.AddWithValue("@SearchText", "%" + searchText + "%"); // Thêm tham số @SearchText với giá trị đã được chuẩn bị
@@ -313,13 +313,16 @@ namespace DONGHODEOTAY
                         MessageBox.Show("Không tìm thấy kết quả tìm kiếm.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Đã xảy ra lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Đã xảy ra lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
-        
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
