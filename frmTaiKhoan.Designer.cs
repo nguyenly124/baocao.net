@@ -30,10 +30,6 @@
         {
             label1 = new Label();
             hienthi = new DataGridView();
-            Column1 = new DataGridViewTextBoxColumn();
-            Column2 = new DataGridViewTextBoxColumn();
-            Column3 = new DataGridViewTextBoxColumn();
-            Column4 = new DataGridViewTextBoxColumn();
             label2 = new Label();
             label3 = new Label();
             label4 = new Label();
@@ -46,6 +42,13 @@
             btthoat = new Button();
             label5 = new Label();
             txtID = new TextBox();
+            Column1 = new DataGridViewTextBoxColumn();
+            Column2 = new DataGridViewTextBoxColumn();
+            Column3 = new DataGridViewTextBoxColumn();
+            Column4 = new DataGridViewTextBoxColumn();
+            Column5 = new DataGridViewTextBoxColumn();
+            txttennv = new ComboBox();
+            label6 = new Label();
             ((System.ComponentModel.ISupportInitialize)hienthi).BeginInit();
             SuspendLayout();
             // 
@@ -64,51 +67,19 @@
             // 
             hienthi.BackgroundColor = SystemColors.ButtonHighlight;
             hienthi.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            hienthi.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column4 });
+            hienthi.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column4, Column5 });
             hienthi.Location = new Point(240, 84);
             hienthi.Name = "hienthi";
             hienthi.RowHeadersWidth = 51;
-            hienthi.Size = new Size(603, 321);
+            hienthi.Size = new Size(755, 321);
             hienthi.TabIndex = 1;
             hienthi.CellClick += hienthi_CellClick;
-            // 
-            // Column1
-            // 
-            Column1.HeaderText = "ID";
-            Column1.MinimumWidth = 6;
-            Column1.Name = "Column1";
-            Column1.ReadOnly = true;
-            Column1.Width = 125;
-            // 
-            // Column2
-            // 
-            Column2.HeaderText = "Tên đăng nhập";
-            Column2.MinimumWidth = 6;
-            Column2.Name = "Column2";
-            Column2.ReadOnly = true;
-            Column2.Width = 150;
-            // 
-            // Column3
-            // 
-            Column3.HeaderText = "Mật khẩu";
-            Column3.MinimumWidth = 6;
-            Column3.Name = "Column3";
-            Column3.ReadOnly = true;
-            Column3.Width = 125;
-            // 
-            // Column4
-            // 
-            Column4.HeaderText = "Loại tài khoản ";
-            Column4.MinimumWidth = 6;
-            Column4.Name = "Column4";
-            Column4.ReadOnly = true;
-            Column4.Width = 150;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            label2.Location = new Point(34, 158);
+            label2.Location = new Point(34, 157);
             label2.Name = "label2";
             label2.Size = new Size(116, 20);
             label2.TabIndex = 2;
@@ -118,7 +89,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            label3.Location = new Point(34, 250);
+            label3.Location = new Point(34, 239);
             label3.Name = "label3";
             label3.Size = new Size(75, 20);
             label3.TabIndex = 3;
@@ -128,23 +99,22 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            label4.Location = new Point(33, 340);
+            label4.Location = new Point(33, 325);
             label4.Name = "label4";
             label4.Size = new Size(111, 20);
             label4.TabIndex = 4;
             label4.Text = "Loại tài khoản ";
-            label4.Click += label4_Click;
             // 
             // txtten
             // 
-            txtten.Location = new Point(34, 195);
+            txtten.Location = new Point(34, 194);
             txtten.Name = "txtten";
             txtten.Size = new Size(168, 27);
             txtten.TabIndex = 5;
             // 
             // txtmatkhau
             // 
-            txtmatkhau.Location = new Point(33, 282);
+            txtmatkhau.Location = new Point(33, 271);
             txtmatkhau.Name = "txtmatkhau";
             txtmatkhau.Size = new Size(169, 27);
             txtmatkhau.TabIndex = 6;
@@ -153,7 +123,7 @@
             // 
             txttaikhoan.FormattingEnabled = true;
             txttaikhoan.Items.AddRange(new object[] { "Quản lý ", "Nhân viên " });
-            txttaikhoan.Location = new Point(33, 372);
+            txttaikhoan.Location = new Point(34, 364);
             txttaikhoan.Name = "txttaikhoan";
             txttaikhoan.Size = new Size(169, 28);
             txttaikhoan.TabIndex = 7;
@@ -202,7 +172,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.Location = new Point(34, 84);
+            label5.Location = new Point(34, 83);
             label5.Name = "label5";
             label5.Size = new Size(25, 20);
             label5.TabIndex = 12;
@@ -211,17 +181,78 @@
             // txtID
             // 
             txtID.Enabled = false;
-            txtID.Location = new Point(34, 117);
+            txtID.Location = new Point(34, 116);
             txtID.Name = "txtID";
             txtID.Size = new Size(168, 27);
             txtID.TabIndex = 13;
+            // 
+            // Column1
+            // 
+            Column1.HeaderText = "ID";
+            Column1.MinimumWidth = 6;
+            Column1.Name = "Column1";
+            Column1.ReadOnly = true;
+            Column1.Width = 125;
+            // 
+            // Column2
+            // 
+            Column2.HeaderText = "Tên đăng nhập";
+            Column2.MinimumWidth = 6;
+            Column2.Name = "Column2";
+            Column2.ReadOnly = true;
+            Column2.Width = 150;
+            // 
+            // Column3
+            // 
+            Column3.HeaderText = "Mật khẩu";
+            Column3.MinimumWidth = 6;
+            Column3.Name = "Column3";
+            Column3.ReadOnly = true;
+            Column3.Width = 125;
+            // 
+            // Column4
+            // 
+            Column4.HeaderText = "Loại tài khoản ";
+            Column4.MinimumWidth = 6;
+            Column4.Name = "Column4";
+            Column4.ReadOnly = true;
+            Column4.Width = 150;
+            // 
+            // Column5
+            // 
+            Column5.HeaderText = "Tên nhân viên ";
+            Column5.MinimumWidth = 6;
+            Column5.Name = "Column5";
+            Column5.ReadOnly = true;
+            Column5.Width = 150;
+            // 
+            // txttennv
+            // 
+            txttennv.FormattingEnabled = true;
+            txttennv.Items.AddRange(new object[] { "Quản lý ", "Nhân viên " });
+            txttennv.Location = new Point(34, 441);
+            txttennv.Name = "txttennv";
+            txttennv.Size = new Size(169, 28);
+            txttennv.TabIndex = 15;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            label6.Location = new Point(34, 411);
+            label6.Name = "label6";
+            label6.Size = new Size(38, 20);
+            label6.TabIndex = 14;
+            label6.Text = "Tên ";
             // 
             // frmTaiKhoan
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientActiveCaption;
-            ClientSize = new Size(867, 495);
+            ClientSize = new Size(1025, 495);
+            Controls.Add(txttennv);
+            Controls.Add(label6);
             Controls.Add(txtID);
             Controls.Add(label5);
             Controls.Add(btthoat);
@@ -248,10 +279,6 @@
 
         private Label label1;
         private DataGridView hienthi;
-        private DataGridViewTextBoxColumn Column1;
-        private DataGridViewTextBoxColumn Column2;
-        private DataGridViewTextBoxColumn Column3;
-        private DataGridViewTextBoxColumn Column4;
         private Label label2;
         private Label label3;
         private Label label4;
@@ -264,5 +291,12 @@
         private Button btthoat;
         private Label label5;
         private TextBox txtID;
+        private DataGridViewTextBoxColumn Column1;
+        private DataGridViewTextBoxColumn Column2;
+        private DataGridViewTextBoxColumn Column3;
+        private DataGridViewTextBoxColumn Column4;
+        private DataGridViewTextBoxColumn Column5;
+        private ComboBox txttennv;
+        private Label label6;
     }
 }

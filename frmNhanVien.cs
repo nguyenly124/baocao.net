@@ -117,6 +117,14 @@ namespace DONGHODEOTAY
                 MessageBox.Show("Số điện thoại phải là số!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            foreach (DataGridViewRow row in hienthi.Rows)
+            {
+                if (row.Cells["Sodt"].Value != null && row.Cells["Sodt"].Value.ToString() == sodt)
+                {
+                    MessageBox.Show("Số điện thoại này đã tồn tại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return; // Thoát khỏi sự kiện thêm nếu trùng
+                }
+            }
 
             // Câu lệnh SQL thêm nhân viên
             string query = "INSERT INTO NhanVien (Manv, Tennv, Diachi, Sodt) VALUES (@Manv, @Tennv, @Diachi, @Sodt)";

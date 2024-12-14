@@ -29,121 +29,141 @@
         private void InitializeComponent()
         {
             label1 = new Label();
-            dataGridView1 = new DataGridView();
-            panel1 = new Panel();
-            Masp = new DataGridViewTextBoxColumn();
-            Tensp = new DataGridViewTextBoxColumn();
-            Soluong = new DataGridViewTextBoxColumn();
-            Gia = new DataGridViewTextBoxColumn();
-            label2 = new Label();
-            label3 = new Label();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
-            panel1.SuspendLayout();
+            hienthi = new DataGridView();
+            Mahd = new DataGridViewTextBoxColumn();
+            ngaytao = new DataGridViewTextBoxColumn();
+            nhanvien = new DataGridViewTextBoxColumn();
+            khachhang = new DataGridViewTextBoxColumn();
+            tienban = new DataGridViewTextBoxColumn();
+            giamgia = new DataGridViewTextBoxColumn();
+            thanhtoan = new DataGridViewTextBoxColumn();
+            btct = new Button();
+            btxoa = new Button();
+            ((System.ComponentModel.ISupportInitialize)hienthi).BeginInit();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(205, 32);
+            label1.Location = new Point(419, 27);
             label1.Name = "label1";
             label1.Size = new Size(229, 28);
             label1.TabIndex = 0;
             label1.Text = "HÓA ĐƠN BÁN HÀNG ";
             // 
-            // dataGridView1
+            // hienthi
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Masp, Tensp, Soluong, Gia });
-            dataGridView1.Location = new Point(25, 74);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(601, 369);
-            dataGridView1.TabIndex = 1;
+            hienthi.BackgroundColor = SystemColors.ButtonHighlight;
+            hienthi.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            hienthi.Columns.AddRange(new DataGridViewColumn[] { Mahd, ngaytao, nhanvien, khachhang, tienban, giamgia, thanhtoan });
+            hienthi.Location = new Point(61, 89);
+            hienthi.Name = "hienthi";
+            hienthi.RowHeadersWidth = 51;
+            hienthi.Size = new Size(957, 428);
+            hienthi.TabIndex = 1;
+            hienthi.CellClick += hienthi_CellClick;
             // 
-            // panel1
+            // Mahd
             // 
-            panel1.Controls.Add(label3);
-            panel1.Controls.Add(label2);
-            panel1.Controls.Add(dataGridView1);
-            panel1.Controls.Add(label1);
-            panel1.Location = new Point(437, 10);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(637, 655);
-            panel1.TabIndex = 2;
+            Mahd.HeaderText = "Mã hóa đơn ";
+            Mahd.MinimumWidth = 6;
+            Mahd.Name = "Mahd";
+            Mahd.ReadOnly = true;
+            Mahd.Width = 150;
             // 
-            // Masp
+            // ngaytao
             // 
-            Masp.HeaderText = "Mã sản phẩm ";
-            Masp.MinimumWidth = 6;
-            Masp.Name = "Masp";
-            Masp.ReadOnly = true;
-            Masp.Width = 150;
+            ngaytao.HeaderText = "Ngày tạo ";
+            ngaytao.MinimumWidth = 6;
+            ngaytao.Name = "ngaytao";
+            ngaytao.Width = 125;
             // 
-            // Tensp
+            // nhanvien
             // 
-            Tensp.HeaderText = "Tên sản phẩm ";
-            Tensp.MinimumWidth = 6;
-            Tensp.Name = "Tensp";
-            Tensp.ReadOnly = true;
-            Tensp.Width = 150;
+            nhanvien.HeaderText = "Nhân viên";
+            nhanvien.MinimumWidth = 6;
+            nhanvien.Name = "nhanvien";
+            nhanvien.Width = 125;
             // 
-            // Soluong
+            // khachhang
             // 
-            Soluong.HeaderText = "Số lượng ";
-            Soluong.MinimumWidth = 6;
-            Soluong.Name = "Soluong";
-            Soluong.Width = 125;
+            khachhang.HeaderText = "Khách hàng ";
+            khachhang.MinimumWidth = 6;
+            khachhang.Name = "khachhang";
+            khachhang.Width = 125;
             // 
-            // Gia
+            // tienban
             // 
-            Gia.HeaderText = "Giá ";
-            Gia.MinimumWidth = 6;
-            Gia.Name = "Gia";
-            Gia.Width = 125;
+            tienban.HeaderText = "Tiền bán ";
+            tienban.MinimumWidth = 6;
+            tienban.Name = "tienban";
+            tienban.Width = 125;
             // 
-            // label2
+            // giamgia
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(42, 461);
-            label2.Name = "label2";
-            label2.Size = new Size(76, 20);
-            label2.TabIndex = 2;
-            label2.Text = "Tổng tiền ";
+            giamgia.HeaderText = "Giảm giá ";
+            giamgia.MinimumWidth = 6;
+            giamgia.Name = "giamgia";
+            giamgia.Width = 125;
             // 
-            // label3
+            // thanhtoan
             // 
-            label3.AutoSize = true;
-            label3.Location = new Point(45, 506);
-            label3.Name = "label3";
-            label3.Size = new Size(73, 20);
-            label3.TabIndex = 3;
-            label3.Text = "Ngày lập ";
+            thanhtoan.HeaderText = "Thanh toán ";
+            thanhtoan.MinimumWidth = 6;
+            thanhtoan.Name = "thanhtoan";
+            thanhtoan.Width = 125;
+            // 
+            // btct
+            // 
+            btct.Location = new Point(670, 557);
+            btct.Name = "btct";
+            btct.Size = new Size(115, 34);
+            btct.TabIndex = 2;
+            btct.Text = "Xem chi tiết ";
+            btct.UseVisualStyleBackColor = true;
+            btct.Click += btct_Click;
+            // 
+            // btxoa
+            // 
+            btxoa.Location = new Point(903, 557);
+            btxoa.Name = "btxoa";
+            btxoa.Size = new Size(115, 34);
+            btxoa.TabIndex = 3;
+            btxoa.Text = "Xóa ";
+            btxoa.UseVisualStyleBackColor = true;
+            btxoa.Click += btxoa_Click;
             // 
             // frmHoaDon
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.GradientActiveCaption;
             ClientSize = new Size(1075, 667);
-            Controls.Add(panel1);
+            Controls.Add(btxoa);
+            Controls.Add(btct);
+            Controls.Add(hienthi);
+            Controls.Add(label1);
             Name = "frmHoaDon";
             Text = "frmHoaDon";
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
+            Load += frmHoaDon_Load;
+            ((System.ComponentModel.ISupportInitialize)hienthi).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private Label label1;
-        private DataGridView dataGridView1;
-        private Panel panel1;
-        private DataGridViewTextBoxColumn Masp;
-        private DataGridViewTextBoxColumn Tensp;
-        private DataGridViewTextBoxColumn Soluong;
-        private DataGridViewTextBoxColumn Gia;
-        private Label label3;
-        private Label label2;
+        private DataGridView hienthi;
+        private DataGridViewTextBoxColumn Mahd;
+        private DataGridViewTextBoxColumn ngaytao;
+        private DataGridViewTextBoxColumn nhanvien;
+        private DataGridViewTextBoxColumn khachhang;
+        private DataGridViewTextBoxColumn tienban;
+        private DataGridViewTextBoxColumn giamgia;
+        private DataGridViewTextBoxColumn thanhtoan;
+        private Button btct;
+        private Button btxoa;
     }
 }

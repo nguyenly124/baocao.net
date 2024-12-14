@@ -100,6 +100,7 @@
             bthoadon.TabIndex = 4;
             bthoadon.Text = "Hóa đơn";
             bthoadon.UseVisualStyleBackColor = false;
+            bthoadon.Click += bthoadon_Click;
             // 
             // btkhachhang
             // 
@@ -117,6 +118,7 @@
             btkhachhang.TabIndex = 3;
             btkhachhang.Text = "Khách hàng ";
             btkhachhang.UseVisualStyleBackColor = false;
+            btkhachhang.Click += btkhachhang_Click;
             // 
             // btnhanvien
             // 
@@ -198,6 +200,7 @@
             danhmucncc.Name = "danhmucncc";
             danhmucncc.Size = new Size(193, 24);
             danhmucncc.Text = "Danh mục nhà cung cấp";
+            danhmucncc.Click += danhmucncc_Click;
             // 
             // danhmucloaisp
             // 
@@ -205,6 +208,7 @@
             danhmucloaisp.Name = "danhmucloaisp";
             danhmucloaisp.Size = new Size(132, 24);
             danhmucloaisp.Text = "Loại sản phẩm ";
+            danhmucloaisp.Click += danhmucloaisp_Click;
             // 
             // menuStripNhanvien
             // 

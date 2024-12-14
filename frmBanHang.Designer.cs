@@ -47,15 +47,24 @@
             Column5 = new DataGridViewTextBoxColumn();
             label5 = new Label();
             txttongtien = new TextBox();
-            btthanhtoan = new Button();
+            bttaohd = new Button();
             btthoat = new Button();
             label6 = new Label();
             txtgiamgia = new TextBox();
             label7 = new Label();
             txtthanhtoan = new TextBox();
+            groupBox2 = new GroupBox();
+            btthemkh = new Button();
+            txttenkh = new TextBox();
+            txtdiachi = new TextBox();
+            txtsodt = new TextBox();
+            label10 = new Label();
+            label9 = new Label();
+            label8 = new Label();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)txtsoluong).BeginInit();
             ((System.ComponentModel.ISupportInitialize)hienthihoadon).BeginInit();
+            groupBox2.SuspendLayout();
             SuspendLayout();
             // 
             // groupBox1
@@ -81,7 +90,7 @@
             // 
             btcapnhat.BackgroundImage = Properties.Resources.vcsupdaterequired_93493;
             btcapnhat.BackgroundImageLayout = ImageLayout.Center;
-            btcapnhat.Location = new Point(329, 300);
+            btcapnhat.Location = new Point(331, 281);
             btcapnhat.Name = "btcapnhat";
             btcapnhat.Size = new Size(48, 48);
             btcapnhat.TabIndex = 9;
@@ -92,7 +101,7 @@
             // 
             btthem.BackgroundImage = Properties.Resources._1486564411_checkmark_81522;
             btthem.BackgroundImageLayout = ImageLayout.Center;
-            btthem.Location = new Point(243, 300);
+            btthem.Location = new Point(243, 281);
             btthem.Name = "btthem";
             btthem.Size = new Size(48, 48);
             btthem.TabIndex = 8;
@@ -239,21 +248,21 @@
             txttongtien.Size = new Size(188, 27);
             txttongtien.TabIndex = 3;
             // 
-            // btthanhtoan
+            // bttaohd
             // 
-            btthanhtoan.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btthanhtoan.Location = new Point(879, 539);
-            btthanhtoan.Name = "btthanhtoan";
-            btthanhtoan.Size = new Size(106, 29);
-            btthanhtoan.TabIndex = 4;
-            btthanhtoan.Text = "Thanh toán ";
-            btthanhtoan.UseVisualStyleBackColor = true;
-            btthanhtoan.Click += btthanhtoan_Click;
+            bttaohd.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            bttaohd.Location = new Point(774, 594);
+            bttaohd.Name = "bttaohd";
+            bttaohd.Size = new Size(106, 29);
+            bttaohd.TabIndex = 4;
+            bttaohd.Text = "Tạo hóa đơn ";
+            bttaohd.UseVisualStyleBackColor = true;
+            bttaohd.Click += btthanhtoan_Click;
             // 
             // btthoat
             // 
             btthoat.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btthoat.Location = new Point(1044, 539);
+            btthoat.Location = new Point(985, 594);
             btthoat.Name = "btthoat";
             btthoat.Size = new Size(106, 29);
             btthoat.TabIndex = 5;
@@ -283,7 +292,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label7.Location = new Point(481, 469);
+            label7.Location = new Point(481, 457);
             label7.Name = "label7";
             label7.Size = new Size(115, 25);
             label7.TabIndex = 8;
@@ -291,23 +300,101 @@
             // 
             // txtthanhtoan
             // 
-            txtthanhtoan.Location = new Point(629, 469);
+            txtthanhtoan.Location = new Point(629, 457);
             txtthanhtoan.Name = "txtthanhtoan";
             txtthanhtoan.Size = new Size(251, 27);
             txtthanhtoan.TabIndex = 9;
+            // 
+            // groupBox2
+            // 
+            groupBox2.Controls.Add(btthemkh);
+            groupBox2.Controls.Add(txttenkh);
+            groupBox2.Controls.Add(txtdiachi);
+            groupBox2.Controls.Add(txtsodt);
+            groupBox2.Controls.Add(label10);
+            groupBox2.Controls.Add(label9);
+            groupBox2.Controls.Add(label8);
+            groupBox2.Location = new Point(15, 383);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(428, 256);
+            groupBox2.TabIndex = 10;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Thông tin khách hàng ";
+            // 
+            // btthemkh
+            // 
+            btthemkh.Location = new Point(240, 209);
+            btthemkh.Name = "btthemkh";
+            btthemkh.Size = new Size(144, 31);
+            btthemkh.TabIndex = 8;
+            btthemkh.Text = "Thêm khách hàng";
+            btthemkh.UseVisualStyleBackColor = true;
+            btthemkh.Visible = false;
+            btthemkh.Click += btthemkh_Click;
+            // 
+            // txttenkh
+            // 
+            txttenkh.Location = new Point(160, 55);
+            txttenkh.Name = "txttenkh";
+            txttenkh.Size = new Size(227, 27);
+            txttenkh.TabIndex = 7;
+            // 
+            // txtdiachi
+            // 
+            txtdiachi.Location = new Point(160, 155);
+            txtdiachi.Name = "txtdiachi";
+            txtdiachi.Size = new Size(221, 27);
+            txtdiachi.TabIndex = 6;
+            // 
+            // txtsodt
+            // 
+            txtsodt.Location = new Point(160, 101);
+            txtsodt.Name = "txtsodt";
+            txtsodt.Size = new Size(224, 27);
+            txtsodt.TabIndex = 5;
+            txtsodt.TextChanged += txtsodt_TextChanged;
+            txtsodt.Leave += txtsodt_Leave;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(11, 155);
+            label10.Name = "label10";
+            label10.Size = new Size(59, 20);
+            label10.TabIndex = 2;
+            label10.Text = "Địa chỉ ";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(11, 108);
+            label9.Name = "label9";
+            label9.Size = new Size(101, 20);
+            label9.TabIndex = 1;
+            label9.Text = "Số điện thoại ";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(11, 58);
+            label8.Name = "label8";
+            label8.Size = new Size(111, 20);
+            label8.TabIndex = 0;
+            label8.Text = "Tên khách hàng";
             // 
             // frmBanHang
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientActiveCaption;
-            ClientSize = new Size(1162, 580);
+            ClientSize = new Size(1162, 665);
+            Controls.Add(groupBox2);
             Controls.Add(txtthanhtoan);
             Controls.Add(label7);
             Controls.Add(txtgiamgia);
             Controls.Add(label6);
             Controls.Add(btthoat);
-            Controls.Add(btthanhtoan);
+            Controls.Add(bttaohd);
             Controls.Add(txttongtien);
             Controls.Add(label5);
             Controls.Add(hienthihoadon);
@@ -319,6 +406,8 @@
             groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)txtsoluong).EndInit();
             ((System.ComponentModel.ISupportInitialize)hienthihoadon).EndInit();
+            groupBox2.ResumeLayout(false);
+            groupBox2.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -342,7 +431,7 @@
         private DataGridViewTextBoxColumn Column4;
         private Label label5;
         private TextBox txttongtien;
-        private Button btthanhtoan;
+        private Button bttaohd;
         private Button btthoat;
         private DataGridViewTextBoxColumn Column5;
         private Button btcapnhat;
@@ -350,5 +439,13 @@
         private TextBox txtgiamgia;
         private Label label7;
         private TextBox txtthanhtoan;
+        private GroupBox groupBox2;
+        private Label label10;
+        private Label label9;
+        private Label label8;
+        private TextBox txtdiachi;
+        private TextBox txtsodt;
+        private Button btthemkh;
+        private TextBox txttenkh;
     }
 }

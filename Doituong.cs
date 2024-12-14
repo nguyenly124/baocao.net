@@ -17,7 +17,7 @@ namespace DONGHODEOTAY
 
             public string Thuoctinh { get; set; }
             // Constructor mặc định
-           
+           public int Manv {  get; set; }
 
             // Ghi đè ToString() để hiển thị thông tin
             public override string ToString()
@@ -87,6 +87,14 @@ namespace DONGHODEOTAY
             public decimal DonGia { get; set; }
             public decimal ThanhTien { get; set; }
 
+        }
+        public class KhachHang
+        {
+            //public string Makh { get; set; }
+            public string Tenkh { get; set; }
+            public string Gioitinh { get; set; }
+            public string Sodt { get; set; }
+            public string Diachi { get; set; }
         }
     }
 }

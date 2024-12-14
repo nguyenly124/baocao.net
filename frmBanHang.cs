@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.ApplicationServices;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,13 +15,32 @@ namespace DONGHODEOTAY
 {
     public partial class frmBanHang : Form
     {
-        public frmBanHang()
+        private Nguoidung nguoidung;
+
+        public frmBanHang(Nguoidung nguoidung)
         {
             InitializeComponent();
+            kn = new ketnoi();
+            this.nguoidung = nguoidung;
+            currentCustomer = new KhachHang();
+
+            
         }
+        
+
         ketnoi kn = new ketnoi();
         List<SanPham> danhSachSanPham = new List<SanPham>();
+        private KhachHang currentCustomer;
 
+       
+        public void SetCustomerInfo(KhachHang kh)
+        {
+            currentCustomer = kh;
+
+            txttenkh.Text = kh.Tenkh;
+            txtsodt.Text = kh.Sodt;
+            txtdiachi.Text = kh.Diachi;
+        }
         private void btthem_Click(object sender, EventArgs e)
         {
             string maSanPham = txtma.SelectedValue.ToString();
@@ -70,8 +90,17 @@ namespace DONGHODEOTAY
             txtma.SelectedIndex = -1;
             txtten.SelectedIndex = -1;
             txtgia.Clear();
+            
 
-
+        }
+        private void ClearTextBoxes1()
+        {
+            txttenkh.Clear();
+            txtdiachi.Clear();
+            txtsodt.Clear();
+            txtthanhtoan.Clear();
+            txttongtien.Clear();
+            txtgiamgia.Clear();
         }
         private void TinhTongTien()
         {
@@ -268,39 +297,152 @@ namespace DONGHODEOTAY
                 if (kn.Connection.State != ConnectionState.Open)
                     kn.Connection.Open();
 
+                // Kiểm tra danh sách sản phẩm
+                if (hienthihoadon.Rows.Count == 0)
+                {
+                    MessageBox.Show("Vui lòng thêm sản phẩm vào hóa đơn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Lấy thông tin khách hàng
+                string tenkh = txttenkh.Text.Trim();
+                string sodt = txtsodt.Text.Trim();
+                string diachi = txtdiachi.Text.Trim();
+                decimal giamgia, tienban, thanhtoan;
+
+                if (!decimal.TryParse(txtgiamgia.Text.Trim(), out giamgia))
+                    giamgia = 0;
+
+                if (!decimal.TryParse(txttongtien.Text.Trim(), out tienban))
+                    tienban = 0;
+
+                if (!decimal.TryParse(txtthanhtoan.Text.Trim(), out thanhtoan))
+                    thanhtoan = 0;
+
+                if (string.IsNullOrEmpty(tenkh) || string.IsNullOrEmpty(sodt) || string.IsNullOrEmpty(diachi))
+                {
+                    MessageBox.Show("Vui lòng nhập đầy đủ thông tin khách hàng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                int manv = nguoidung.Manv;
+
+                // 1. Xác minh Mã nhân viên (Manv)
+                string queryCheckManv = "SELECT COUNT(*) FROM NhanVien WHERE Manv = @Manv";
+                SqlCommand cmdCheckManv = new SqlCommand(queryCheckManv, kn.Connection);
+                cmdCheckManv.Parameters.AddWithValue("@Manv", manv);
+
+                int countManv = (int)cmdCheckManv.ExecuteScalar();
+                if (countManv == 0)
+                {
+                    MessageBox.Show("Nhân viên không hợp lệ hoặc không tồn tại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // 2. Lấy Mã khách hàng (Makh)
+                string queryMakh = "SELECT Makh FROM KhachHang WHERE Tenkh = @TenKhachHang";
+                SqlCommand cmdMakh = new SqlCommand(queryMakh, kn.Connection);
+                cmdMakh.Parameters.AddWithValue("@TenKhachHang", tenkh);
+
+                object resultMakh = cmdMakh.ExecuteScalar();
+                if (resultMakh == null)
+                {
+                    MessageBox.Show("Khách hàng không tồn tại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                int makh = Convert.ToInt32(resultMakh);
+
+                TinhTongTien();
+
+                // 3. Thêm hóa đơn vào bảng HoaDon
+                string queryHoaDon = @"
+    INSERT INTO HoaDon (Ngaytao, Manv, Makh, Tienban, Giamgia, Thanhtoan)
+    VALUES (@Ngaytao, @Manv, @Makh, @Tienban, @Giamgia, @Thanhtoan);
+    SELECT SCOPE_IDENTITY();";
+
+                SqlCommand cmdHoaDon = new SqlCommand(queryHoaDon, kn.Connection);
+                cmdHoaDon.Parameters.AddWithValue("@Ngaytao", DateTime.Now);
+                cmdHoaDon.Parameters.AddWithValue("@Manv", manv);
+                cmdHoaDon.Parameters.AddWithValue("@Makh", makh);
+                cmdHoaDon.Parameters.AddWithValue("@Tienban", tienban);
+                cmdHoaDon.Parameters.AddWithValue("@Thanhtoan", thanhtoan);
+                cmdHoaDon.Parameters.AddWithValue("@Giamgia", giamgia);
+
+                int mahd = Convert.ToInt32(cmdHoaDon.ExecuteScalar());
+
+                // 4. Cập nhật chi tiết hóa đơn vào bảng CTHoaDon
+                string queryCTHoaDon = @"
+    IF EXISTS (SELECT * FROM CTHoaDon WHERE Mahd = @Mahd AND Masp = @Masp)
+    BEGIN
+        UPDATE CTHoaDon
+        SET Soluong = Soluong + @Soluong, Dongia = @Dongia
+        WHERE Mahd = @Mahd AND Masp = @Masp;
+    END
+    ELSE
+    BEGIN
+        INSERT INTO CTHoaDon (Mahd, Masp, Soluong, Dongia)
+        VALUES (@Mahd, @Masp, @Soluong, @Dongia);
+    END";
+
                 foreach (DataGridViewRow row in hienthihoadon.Rows)
                 {
                     if (row.Cells["Column1"].Value != null)
                     {
-                        string maSanPham = row.Cells["column1"].Value.ToString();
-                        int soLuong = int.Parse(row.Cells["column3"].Value.ToString());
+                        int masp = Convert.ToInt32(row.Cells["Column1"].Value);
+                        int soluong = Convert.ToInt32(row.Cells["Column3"].Value);
+                        decimal dongia = Convert.ToDecimal(row.Cells["Column4"].Value);
 
-                        // Cập nhật số lượng trong cơ sở dữ liệu
-                        string query = "UPDATE SanPham SET Soluong = Soluong - @SoLuong WHERE Masp = @MaSanPham";
-                        SqlCommand command = new SqlCommand(query, kn.Connection);
-                        command.Parameters.AddWithValue("@SoLuong", soLuong);
-                        command.Parameters.AddWithValue("@MaSanPham", maSanPham);
+                        SqlCommand cmdCTHoaDonUpdate = new SqlCommand(queryCTHoaDon, kn.Connection);
+                        cmdCTHoaDonUpdate.Parameters.AddWithValue("@Mahd", mahd);
+                        cmdCTHoaDonUpdate.Parameters.AddWithValue("@Masp", masp);
+                        cmdCTHoaDonUpdate.Parameters.AddWithValue("@Soluong", soluong);
+                        cmdCTHoaDonUpdate.Parameters.AddWithValue("@Dongia", dongia);
 
-                        command.ExecuteNonQuery();
+                        cmdCTHoaDonUpdate.ExecuteNonQuery();
+
+                        // 5. Cập nhật số lượng trong bảng SanPham
+                        string queryUpdateSanPham = "UPDATE SanPham SET Soluong = Soluong - @Soluong WHERE Masp = @Masp";
+                        SqlCommand cmdUpdateSanPham = new SqlCommand(queryUpdateSanPham, kn.Connection);
+                        cmdUpdateSanPham.Parameters.AddWithValue("@Masp", masp);
+                        cmdUpdateSanPham.Parameters.AddWithValue("@Soluong", soluong);
+
+                        try
+                        {
+                            int rowsAffectedSanPham = cmdUpdateSanPham.ExecuteNonQuery();
+                            if (rowsAffectedSanPham == 0)
+                                MessageBox.Show($"Sản phẩm {masp} không đủ số lượng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Lỗi cập nhật số lượng sản phẩm {masp}: {ex.Message}");
+                        }
                     }
                 }
 
-                MessageBox.Show("Thanh toán thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Tạo hóa đơn thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Sau khi thanh toán, xóa toàn bộ sản phẩm trong DataGridView
+                // Làm mới giao diện
                 hienthihoadon.Rows.Clear();
+
+                frmCTHoaDon chiTietForm = new frmCTHoaDon(mahd);
+                chiTietForm.Show();
+
                 ClearTextBoxes();
-                TinhTongTien(); // Reset tổng tiền
+                ClearTextBoxes1();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Có lỗi khi thanh toán: " + ex.Message);
+                MessageBox.Show($"Có lỗi khi thanh toán hóa đơn: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
-                kn.Connection.Close();
+                if (kn.Connection.State == ConnectionState.Open)
+                    kn.Connection.Close();
             }
+
         }
+
 
         private void txtgiamgia_TextChanged(object sender, EventArgs e)
         {
@@ -346,6 +488,66 @@ namespace DONGHODEOTAY
         private void btthoat_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void btthemkh_Click(object sender, EventArgs e)
+        {
+            frmthemkh formThemKhachHang = new frmthemkh(this);
+            formThemKhachHang.ShowDialog();
+        }
+
+        private void txtsodt_Leave(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void txtsodt_TextChanged(object sender, EventArgs e)
+        {
+            string sodt = txtsodt.Text.Trim();
+
+            if (string.IsNullOrEmpty(sodt))
+                return;
+
+            try
+            {
+                if (kn.Connection.State != ConnectionState.Open)
+                    kn.Connection.Open();
+
+                string query = "SELECT Tenkh, Diachi FROM KhachHang WHERE Sodt = @Sodt";
+
+                using (SqlCommand command = new SqlCommand(query, kn.Connection))
+                {
+                    command.Parameters.AddWithValue("@Sodt", sodt);
+
+                    // Sử dụng using statement để đảm bảo SqlDataReader được đóng tự động
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            txttenkh.Text = reader["Tenkh"].ToString();
+                            txtdiachi.Text = reader["Diachi"].ToString();
+
+                            btthemkh.Visible = false;  // Ẩn button "Thêm khách hàng" vì đã tìm thấy khách hàng
+                        }
+                        else
+                        {
+                            txttenkh.Text = "";
+                            txtdiachi.Text = "";
+
+                            btthemkh.Visible = true;  // Hiển button "Thêm khách hàng" nếu không tìm thấy khách hàng
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (kn.Connection.State == ConnectionState.Open)
+                    kn.Connection.Close();  // Đảm bảo kết nối được đóng sau khi xong
+            }
         }
     }
 }

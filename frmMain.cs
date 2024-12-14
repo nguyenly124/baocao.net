@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.ApplicationServices;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,17 +17,18 @@ namespace DONGHODEOTAY
     {
         private Nguoidung nguoidung;
         private List<Form> openForms;
-       
-        public frmMain()
+
+        public frmMain(Nguoidung nguoidung)
         {
             InitializeComponent();
+            this.nguoidung = nguoidung;
             openForms = new List<Form>();
         }
-        public void SetNguoidung(Doituong.Nguoidung user)
+        /*public void SetNguoidung(Doituong.Nguoidung user)
         {
-            this.nguoidung = user;
-           
-        }
+            
+
+        }*/
         private void CloseAllChildForms()
         {
             // Duyệt qua tất cả các Form con trong danh sách
@@ -46,7 +48,7 @@ namespace DONGHODEOTAY
 
         private void btsanpham_Click(object sender, EventArgs e)
         {
-            
+
             menuStripNhanvien.Visible = false;
             menuStripSanPham.Visible = true;
             CloseAllChildForms();
@@ -127,22 +129,57 @@ namespace DONGHODEOTAY
 
         private void btbanhang_Click(object sender, EventArgs e)
         {
+
+            frmBanHang formBanHang = new frmBanHang(nguoidung);
+            formBanHang.Show();
             menuStripSanPham.Visible = false;
             menuStripNhanvien.Visible = false;
             CloseAllChildForms();
-            frmBanHang frm = new frmBanHang();
-            LoadFormIntoPanel(frm);
-            openForms.Add(frm);
+            
+            LoadFormIntoPanel(formBanHang);
+            openForms.Add(formBanHang);
         }
-
+        // phân quyền 
         private void frmMain_Load(object sender, EventArgs e)
         {
             if (nguoidung.Thuoctinh == "Nhân viên")
             {
-                // Quyền admin: bật tất cả tính năng
-                bthoadon.Enabled = true;
+                
                 btnhanvien.Enabled = false;
             }
+           
+        }
+
+        private void danhmucloaisp_Click(object sender, EventArgs e)
+        {
+            frmLoaiSP frm = new frmLoaiSP();
+            LoadFormIntoPanel(frm);
+            openForms.Add(frm);
+        }
+
+        private void bthoadon_Click(object sender, EventArgs e)
+        {
+            menuStripSanPham.Visible = false;
+            menuStripNhanvien.Visible = false;
+            frmHoaDon frm = new frmHoaDon();
+            LoadFormIntoPanel(frm);
+            openForms.Add(frm);
+        }
+
+        private void danhmucncc_Click(object sender, EventArgs e)
+        {
+            frmnhacc frm = new frmnhacc();
+            LoadFormIntoPanel(frm);
+            openForms.Add(frm);
+        }
+
+        private void btkhachhang_Click(object sender, EventArgs e)
+        {
+            menuStripSanPham.Visible = false;
+            menuStripNhanvien.Visible = false;
+            frmKhachHang frm = new frmKhachHang();
+            LoadFormIntoPanel(frm);
+            openForms.Add(frm);
         }
     }
 }

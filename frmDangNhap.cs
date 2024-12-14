@@ -63,52 +63,50 @@ namespace DONGHODEOTAY
         private void btdangnhap_Click(object sender, EventArgs e)
         {
             if (kn.Connection.State != ConnectionState.Open)
-            {
                 kn.Connection.Open();
-            }
+
             string username = txtten.Text.Trim();
             string password = txtmatkhau.Text.Trim();
             string role = txttaikhoan.Text.Trim();
 
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) || txttaikhoan.SelectedIndex == -1)
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(role))
             {
                 MessageBox.Show("Vui lòng nhập đầy đủ thông tin!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            string query = "SELECT Tendn, Matkhau, Thuoctinh FROM TaiKhoan WHERE Tendn = @Tendn AND Matkhau = @Matkhau AND Thuoctinh=@Thuoctinh" ;
+
+            string query = "SELECT Tendn, Matkhau, Thuoctinh, Manv FROM TaiKhoan WHERE Tendn = @Tendn AND Matkhau = @Matkhau AND Thuoctinh = @Thuoctinh";
+
             try
             {
-                
                 using (SqlCommand command = new SqlCommand(query, kn.Connection))
-                    {
-                        command.Parameters.AddWithValue("@Tendn", username);
-                        command.Parameters.AddWithValue("@Matkhau", password);
+                {
+                    command.Parameters.AddWithValue("@Tendn", username);
+                    command.Parameters.AddWithValue("@Matkhau", password);
                     command.Parameters.AddWithValue("@Thuoctinh", role);
 
                     using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
                         {
-                            if (reader.Read())
+                            var nguoidung = new Nguoidung
                             {
-                                var nguoidung = new Nguoidung
-                                {
-                                    Tendn = reader.GetString(0),
-                                    Matkhau = reader.GetString(1),
-                                    Thuoctinh = reader.GetString(2)
-                                };
+                                Tendn = reader.GetString(0),
+                                Matkhau = reader.GetString(1),
+                                Thuoctinh = reader.GetString(2),
+                                Manv = reader.GetInt32(3)  // Gán Manv
+                            };
 
-                                MessageBox.Show($"Đăng nhập thành công! Chào mừng {nguoidung.Tendn} ({nguoidung.Thuoctinh})", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            frmMain mainForm = new frmMain();
-                            mainForm.SetNguoidung(nguoidung);
+                            frmMain mainForm = new frmMain(nguoidung);
                             mainForm.Show();
 
                             this.Hide();
                         }
-                            else
-                            {
-                                MessageBox.Show("Tên đăng nhập hoặc mật khẩu không chính xác!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
+                        else
+                        {
+                            MessageBox.Show("Tên đăng nhập hoặc mật khẩu không chính xác!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
-                    
+                    }
                 }
             }
             catch (Exception ex)

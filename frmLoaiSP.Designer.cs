@@ -43,10 +43,16 @@
             btthem = new Button();
             btsua = new Button();
             btthoat = new Button();
-            dataGridView2 = new DataGridView();
+            hienthisp = new DataGridView();
+            Column4 = new DataGridViewTextBoxColumn();
+            Column5 = new DataGridViewTextBoxColumn();
+            Column6 = new DataGridViewTextBoxColumn();
+            Column7 = new DataGridViewTextBoxColumn();
+            groupBox2 = new GroupBox();
             ((System.ComponentModel.ISupportInitialize)hienthi).BeginInit();
             groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)hienthisp).BeginInit();
+            groupBox2.SuspendLayout();
             SuspendLayout();
             // 
             // label1
@@ -64,11 +70,12 @@
             hienthi.BackgroundColor = SystemColors.ButtonHighlight;
             hienthi.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             hienthi.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3 });
-            hienthi.Location = new Point(508, 93);
+            hienthi.Location = new Point(596, 93);
             hienthi.Name = "hienthi";
             hienthi.RowHeadersWidth = 51;
-            hienthi.Size = new Size(546, 429);
+            hienthi.Size = new Size(518, 337);
             hienthi.TabIndex = 1;
+            hienthi.CellClick += hienthi_CellClick;
             // 
             // Column1
             // 
@@ -127,6 +134,7 @@
             // 
             // txtma
             // 
+            txtma.Enabled = false;
             txtma.Location = new Point(142, 42);
             txtma.Name = "txtma";
             txtma.Size = new Size(288, 27);
@@ -156,7 +164,7 @@
             groupBox1.Controls.Add(label3);
             groupBox1.Location = new Point(31, 93);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(458, 200);
+            groupBox1.Size = new Size(540, 200);
             groupBox1.TabIndex = 8;
             groupBox1.TabStop = false;
             groupBox1.Text = "Thông tin ";
@@ -164,62 +172,106 @@
             // btthem
             // 
             btthem.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btthem.Location = new Point(524, 550);
+            btthem.Location = new Point(25, 37);
             btthem.Name = "btthem";
             btthem.Size = new Size(105, 32);
             btthem.TabIndex = 10;
             btthem.Text = "Thêm";
             btthem.UseVisualStyleBackColor = true;
+            btthem.Click += btthem_Click;
             // 
             // btsua
             // 
             btsua.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btsua.Location = new Point(712, 550);
+            btsua.Location = new Point(213, 37);
             btsua.Name = "btsua";
             btsua.Size = new Size(114, 31);
             btsua.TabIndex = 11;
             btsua.Text = "Sửa ";
             btsua.UseVisualStyleBackColor = true;
+            btsua.Click += btsua_Click;
             // 
             // btthoat
             // 
             btthoat.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btthoat.Location = new Point(894, 552);
+            btthoat.Location = new Point(395, 39);
             btthoat.Name = "btthoat";
             btthoat.Size = new Size(94, 29);
             btthoat.TabIndex = 12;
             btthoat.Text = "Thoát ";
             btthoat.UseVisualStyleBackColor = true;
+            btthoat.Click += btthoat_Click;
             // 
-            // dataGridView2
+            // hienthisp
             // 
-            dataGridView2.BackgroundColor = SystemColors.ButtonHighlight;
-            dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView2.Location = new Point(31, 338);
-            dataGridView2.Name = "dataGridView2";
-            dataGridView2.RowHeadersWidth = 51;
-            dataGridView2.Size = new Size(457, 184);
-            dataGridView2.TabIndex = 9;
+            hienthisp.BackgroundColor = SystemColors.ButtonHighlight;
+            hienthisp.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            hienthisp.Columns.AddRange(new DataGridViewColumn[] { Column4, Column5, Column6, Column7 });
+            hienthisp.Location = new Point(12, 315);
+            hienthisp.Name = "hienthisp";
+            hienthisp.RowHeadersWidth = 51;
+            hienthisp.Size = new Size(559, 207);
+            hienthisp.TabIndex = 9;
+            // 
+            // Column4
+            // 
+            Column4.HeaderText = "Mã sản phẩm";
+            Column4.MinimumWidth = 6;
+            Column4.Name = "Column4";
+            Column4.Width = 125;
+            // 
+            // Column5
+            // 
+            Column5.HeaderText = "Tên sản phẩm ";
+            Column5.MinimumWidth = 6;
+            Column5.Name = "Column5";
+            Column5.Width = 125;
+            // 
+            // Column6
+            // 
+            Column6.HeaderText = "Số lượng";
+            Column6.MinimumWidth = 6;
+            Column6.Name = "Column6";
+            Column6.Width = 125;
+            // 
+            // Column7
+            // 
+            Column7.HeaderText = "Giá bán";
+            Column7.MinimumWidth = 6;
+            Column7.Name = "Column7";
+            Column7.Width = 125;
+            // 
+            // groupBox2
+            // 
+            groupBox2.Controls.Add(btthoat);
+            groupBox2.Controls.Add(btthem);
+            groupBox2.Controls.Add(btsua);
+            groupBox2.Location = new Point(601, 448);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(513, 74);
+            groupBox2.TabIndex = 13;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Chức năng";
             // 
             // frmLoaiSP
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientActiveCaption;
-            ClientSize = new Size(1066, 592);
-            Controls.Add(dataGridView2);
-            Controls.Add(btthoat);
-            Controls.Add(btsua);
-            Controls.Add(btthem);
+            ClientSize = new Size(1117, 554);
+            Controls.Add(groupBox2);
+            Controls.Add(hienthisp);
             Controls.Add(groupBox1);
             Controls.Add(hienthi);
             Controls.Add(label1);
             Name = "frmLoaiSP";
             Text = "frmLoaiSP";
+            Load += frmLoaiSP_Load;
             ((System.ComponentModel.ISupportInitialize)hienthi).EndInit();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)hienthisp).EndInit();
+            groupBox2.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -241,6 +293,11 @@
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;
         private DataGridViewTextBoxColumn Column3;
-        private DataGridView dataGridView2;
+        private DataGridView hienthisp;
+        private DataGridViewTextBoxColumn Column4;
+        private DataGridViewTextBoxColumn Column5;
+        private DataGridViewTextBoxColumn Column6;
+        private DataGridViewTextBoxColumn Column7;
+        private GroupBox groupBox2;
     }
 }
